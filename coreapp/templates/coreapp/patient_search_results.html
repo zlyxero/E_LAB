@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+
+{{block.super}} - Patient Search Results
+
+{% endblock %}
+
+{% block style %} 
+
+td, th {
+	padding-right: 20px;
+}
+
+{% endblock %}
+
+{% block main %} 
+
+<h1> Patient Search Results </h1>
+
+<!-- test if there are patient records found and display them -->
+{% if patient %}
+<table>
+	<th>First Name</th>
+	<th>Last Name</th>
+	<th>Middle Name</th>
+	<th>DOB</th>
+	<th>Email</th>
+	<th>Mobile</th>
+	<th>Insurance Name</th>
+	<th>Insurance ID</th>
+	
+	<tr>
+		<td>{{patient.first_name}}</td>
+		<td>{{patient.last_name}}</td>
+		<td>{{patient.middle_name}}</td>
+		<td>{{patient.date_of_birth}}</td>
+		<td>{{patient.email}}</td>
+		<td>{{patient.mobile}}</td>
+		<td>{{patient.insurance}}</td>
+		<td>{{patient.member_id}}</td>
+	</tr>
+
+	
+</table>
+
+<p><a href="{% url 'coreapp:lab-test-request' patient_id=patient.id %}">Make lab test request for {{patient.first_name}} {{patient.last_name}} </a> </p>
+
+<!-- no patient records found from the search -->
+{%else%}
+
+<h2> No patient records found</h2>
+<p><a href="{%url 'coreapp:patient-registration'%}"> Register New Patient </a></p>
+<p><a href="{%url 'coreapp:search-patient'%}">Try another search</a></p>
+
+{% endif %}	
+
+
+{% endblock %}

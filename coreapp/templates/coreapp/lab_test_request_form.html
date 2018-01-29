@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+<!-- title -->
+
+{% block title %} 
+
+{{block.super}} - Lab Test Request
+
+{% endblock %}
+
+<!-- links -->
+
+{% block links %} 
+
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" media="all" />
+
+{% endblock%}
+
+<!-- main -->
+
+{% block main %} 
+
+<h1> Lab Test Request </h1>
+
+<h2> Patient: {{patient.first_name}} {{patient.last_name}}</h2>
+
+<form action="{% url 'coreapp:lab-test-request' patient_id=patient.id %}" method="post">
+	
+	{%csrf_token%}
+	{{form.as_p}}
+
+	<!-- lab test input field -->
+
+	<p><label for="id_test">Select Lab Test:</label> <input id="id_test" name="name" type="text" /></p>
+
+	<div class="input_fields_wrap">
+    	
+    	<button class="add_field_button">Add Test</button>
+
+	</div>
+
+	<button type="submit"> Send Request </button>
+
+</form>
+
+
+<!-- scripts -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+
+<script src="{% static 'js/main.js' %}"></script>
+
+
+{% endblock %}

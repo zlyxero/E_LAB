@@ -1,0 +1,46 @@
+{% extends 'base.html'%}
+
+{% block title %} 
+
+{{block.super}} - Lab Request List
+
+{% endblock %}
+
+
+{% block main %} 
+
+<h1> List of submitted Lab requests </h1>
+
+<!-- test if there are lab test request records found and display them -->
+
+{% if labrequest_list %}
+
+<table style="border:1px solid  black">
+	
+	<th>Patient</th>
+	<th>Date</th>
+	<th>Lab</th>
+	<th> Test Details </th>
+	
+	{% for test in labrequest_list %}
+	<tr>
+		<td>{{test.patient}} </td>
+		<td> {{test.date}}</td>
+		<td>{{test.lab}}</td>
+		<td><a href="{% url 'coreapp:lab-request-detail' request_id=test.id %}"> (View Details) </a></td>
+	</tr>
+	
+	{%endfor%}
+	
+</table>
+
+{%else%}
+
+<h2 style="text-align: center; padding-top: 100px;"> No Records of Lab Requests </h2>
+
+{%endif%}
+
+<p style="padding-top: 60px;"> Search for patient and <a href="{%url 'coreapp:search-patient' %}"> make new lab test request </a></p>
+
+
+{% endblock %}

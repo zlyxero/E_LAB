@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+
+{{block.super}} - Patient Registration
+
+{% endblock %}
+
+{% block main %} 
+
+<h1> Patient Registration </h1>
+
+<form action="{% url 'coreapp:patient-registration' %}" method="post">
+	
+	{%csrf_token%}
+	{{form.as_p}}
+
+	<button type="submit"> Register </button>
+
+</form>
+
+{% endblock %}

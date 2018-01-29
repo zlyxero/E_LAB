@@ -1,0 +1,33 @@
+
+{% extends 'base.html'%}
+
+{% block title %} 
+
+{{block.super}} - Lab Request 
+
+{% endblock %}
+
+
+{% block main %} 
+
+
+<h1> Lab Requst </h1>
+
+<p><strong>PATIENT:</strong> {{request.patient}}</p>
+<p><strong>DATE:</strong> {{request.date}}</p>
+<p>
+	<strong> TEST(s): </strong>
+
+	 <ol>
+		{% for test in labtests %}
+			<li> {{test.name}} </li>
+		{% endfor %}	
+	 </ol> 
+
+</p>
+
+
+<p style="padding-top: 60px"><a href="{%url 'coreapp:lab-request-list' %}">View all submitted lab test requests</a></p>
+
+{% endblock %}
+

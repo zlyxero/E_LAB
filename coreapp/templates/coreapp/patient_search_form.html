@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{{block.super}} - Search Patient
+
+{% endblock %}
+
+{% block main %} 
+
+<h1> Search Patient </h1>
+
+<form action="{% url 'coreapp:search-patient'%}" method="post">
+	{%csrf_token%}
+	{{form.as_p}}
+
+	<button type="submit">search</button>
+
+</form>
+
+{% endblock %}
