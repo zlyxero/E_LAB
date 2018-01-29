@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+
+{% block title %} 
+
+{{block.super}} - Lab Result
+
+{% endblock %}
+
+
+{% block main %} 
+
+<form action="{% url 'coreapp:lab-result' %}" method="post">
+	
+	{%csrf_token%}
+
+	{{form.as_p}}
+
+	<button type="submit"> Send Result </button>
+
+</form>
+
+{% endblock %}

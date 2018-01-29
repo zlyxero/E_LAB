@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Patient, Specimen, Laboratory
+from .models import Patient, Specimen, Laboratory, LabResult
 from django import forms
 import datetime
 from django.contrib.auth.models import User
@@ -37,3 +37,11 @@ class UserForm(forms.ModelForm):
 		model = User
 		fields =('username', 'email', 'password')
 
+
+class LabResultForm(ModelForm):
+
+	class Meta:
+		model = LabResult
+		fields = '__all__'
+
+		
