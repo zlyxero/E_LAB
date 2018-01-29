@@ -52,11 +52,11 @@ class Patient(models.Model):
 	last_name = models.CharField(max_length=35)
 	middle_name = models.CharField(max_length=35)
 	email = models.EmailField()
-	mobile = PhoneNumberField()
+	mobile = PhoneNumberField(unique=True)
 	date_of_birth = models.DateField()
 	member_id = models.IntegerField(verbose_name='insurance member id', blank=True)
 
-	insurance = models.ForeignKey(Insurance, models.SET_NULL, null=True, verbose_name='insurance company')
+	insurance = models.ForeignKey(Insurance, models.SET_NULL, null=True, verbose_name='insurance company', blank=True)
 
 	def __str__(self):
 		return "{} {} {}".format(self.last_name, self.middle_name, self.first_name)
