@@ -76,10 +76,10 @@ class LabRequest(models.Model):
 class LabResult(models.Model):
 	""" Records Lab results - not viewed yet and updated by a doctor """
 
-	lab_request = models.ForeignKey(LabRequest, models.PROTECT) # the test conducted
+	lab_request = models.ForeignKey(LabRequest, models.PROTECT, unique=True) # the test conducted
 	diagnosis = models.TextField(null=False, blank=False)
 	date = models.DateField(auto_now_add=True) # date when the result was recorded
-	lab = models.ForeignKey(Laboratory, models.PROTECT, null=True)
+	lab = models.ForeignKey(Laboratory, models.PROTECT)
 
 	def __str__(self):
 		return '[possible diagnosis]: ' + self.diagnosis

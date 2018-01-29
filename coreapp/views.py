@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic.list import ListView
-from .forms import PatientSearchForm, LabTestRequestForm, PatientRegistrationForm
+from .forms import PatientSearchForm, LabTestRequestForm, PatientRegistrationForm, LabResultForm
 from . import models
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
@@ -220,3 +220,24 @@ def user_login(request):
 
 	
 	return render(request, 'coreapp/login.html', {'errors':errors})			
+
+
+class LabResult(View):
+	""" form used to add a result for a requested lab test """
+	def get(self, request):
+
+		form = LabResultForm()	
+		return render(request, 'coreapp/lab_result_form.html', {'form':form})
+
+	def post(self, request):
+
+		form = LabResultForm(request.POST)
+
+		if form.is_valid():
+
+			form.save()	
+			return redirect('coreapp:lab-result-success')
+		
+		else:
+			return render(request, 'coreapp/lab_result_form.html', {'form':form})
+

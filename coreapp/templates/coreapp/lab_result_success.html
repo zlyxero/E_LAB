@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+
+{% block title %} 
+
+{{block.super}} - Request Submitted
+
+{% endblock %}
+
+
+{% block main %} 
+
+<h1> Lab Result Successfully Sent! </h1>
+
+<p><a href="{% url 'coreapp:lab-result' %}">submit new lab result </a></p>
+
+{% endblock %}
