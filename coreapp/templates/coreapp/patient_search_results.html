@@ -18,10 +18,10 @@ td, th {
 
 <h1> Patient Search Results </h1>
 
-{% for patient in query_set %}
+{% if query_set %}
 
 <!-- test if there are patient records found and display them -->
-{% if patient %}
+
 <table>
 	<th>First Name</th>
 	<th>Last Name</th>
@@ -31,6 +31,8 @@ td, th {
 	<th>Mobile</th>
 	<th>Insurance Name</th>
 	<th>Insurance ID</th>
+
+{% for patient in query_set %}
 	
 	<tr>
 		<td>{{patient.first_name}}</td>
@@ -43,12 +45,14 @@ td, th {
 		<td>{{patient.member_id}}</td>
 	</tr>
 
-	
+{% endfor %}
+		
 </table>
 
 <p><a href="{% url 'coreapp:lab-test-request' patient_id=patient.id %}">Make lab test request for {{patient.first_name}} {{patient.last_name}} </a> </p>
 
 <!-- no patient records found from the search -->
+
 {%else%}
 
 <h2> No patient records found</h2>
@@ -57,6 +61,5 @@ td, th {
 
 {% endif %}	
 
-{% endfor %}
 
 {% endblock %}

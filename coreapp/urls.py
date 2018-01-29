@@ -5,6 +5,7 @@ from . import views
 app_name = 'coreapp'
 
 urlpatterns = [
+
     path('search-patient/', views.SearchPatient.as_view(), name='search-patient'),
     path('patient-registration/', views.PatientRegistration.as_view(), name='patient-registration'),
     re_path('(?P<patient_id>[\d]+)/make-lab-request/', views.LabTestRequest.as_view(), name='lab-test-request'),
