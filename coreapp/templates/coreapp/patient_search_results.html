@@ -18,6 +18,8 @@ td, th {
 
 <h1> Patient Search Results </h1>
 
+{% for patient in query_set %}
+
 <!-- test if there are patient records found and display them -->
 {% if patient %}
 <table>
@@ -55,5 +57,6 @@ td, th {
 
 {% endif %}	
 
+{% endfor %}
 
 {% endblock %}
