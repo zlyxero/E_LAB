@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from django.views.generic.list import ListView
+from django.views.generic import ListView, UpdateView
 from .forms import PatientSearchForm, LabTestRequestForm, PatientRegistrationForm, LabResultForm
 from . import models
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
+from django.urls import reverse_lazy 
 
 
 # Create your views here.
@@ -27,13 +28,13 @@ class SearchPatient(View):
 			member_id = form.cleaned_data.get('member_id')
 
 			if mobile:
-				query_set = models.Patient.objects.filter(first_name=first_name, mobile=mobile)
+				query_set = models.Patient.objects.filter(first_name__iexact=first_name, mobile=mobile)
 
 			elif member_id:
 				query_set = models.Patient.objects.filter(first_name=first_name, mobile=mobile)
 
 			else:
-				query_set = models.Patient.objects.filter(first_name=first_name)
+				query_set = models.Patient.objects.filter(first_name__iexact=first_name)
 			
 			return render(request, 'coreapp/patient_search_results.html', {'query_set': query_set})
 
@@ -169,16 +170,15 @@ def LabRequestsList(request):
 	
 	labrequest_list = models.LabRequest.objects.all()
 	
-
 	context = {'labrequest_list': labrequest_list}
 
 	return render(request, 'coreapp/labrequest_list.html', context)
-
 
 def LabRequestDetail(request, request_id):
 
 	labrequest = models.LabRequest.objects.get(id=request_id)
 	labtests = labrequest.lab_test.all()
+
 	context = {'request': labrequest, 'labtests':labtests}
 	
 	return render(request, 'coreapp/labrequest_detail.html', context)
@@ -224,20 +224,62 @@ def user_login(request):
 
 class LabResult(View):
 	""" form used to add a result for a requested lab test """
-	def get(self, request):
+	def get(self, request, request_id):
 
 		form = LabResultForm()	
 		return render(request, 'coreapp/lab_result_form.html', {'form':form})
 
-	def post(self, request):
+	def post(self, request, request_id):
 
 		form = LabResultForm(request.POST)
 
 		if form.is_valid():
 
-			form.save()	
+			diagnosis = form.cleaned_data['diagnosis']
+			lab = form.cleaned_data['lab']
+			test_result = form.cleaned_data['lab']
+
+			lab_request = get_object_or_404(models.LabRequest, id=request_id)
+			
+			# create a new lab result object and save
+
+			result = models.LabResult(
+					diagnosis = diagnosis,
+					lab = lab,
+					test_result = test_result,
+					lab_request = lab_request
+
+				)
+
+			result.save()
+
 			return redirect('coreapp:lab-result-success')
 		
 		else:
 			return render(request, 'coreapp/lab_result_form.html', {'form':form})
+
+
+def LabResultDetail(request, result_id):
+	
+	""" The details of a lab result. From the url we get the id of of a lab result """
+	
+	lab_result = get_object_or_404(models.LabResult, id=result_id)
+	lab_request = lab_result.lab_request
+
+	# get labtests associated with our lab request 
+	labtests = lab_request.lab_test.all()
+
+	context = {'lab_result': lab_result, 'lab_request': lab_request, 'labtests':labtests}
+
+	return render(request, 'coreapp/lab_result_detail.html', context)
+
+
+class LabResultUpdate(UpdateView):
+
+	""" Update lab results """
+
+	model = models.LabResult
+	fields = ['diagnosis']
+	template_name = 'coreapp/labresult_update_form.html'
+	success_url = reverse_lazy('coreapp:labresult-updated')
 

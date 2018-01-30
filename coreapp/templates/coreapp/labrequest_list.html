@@ -1,5 +1,7 @@
 {% extends 'base.html'%}
 
+{% load auth_extras %}
+
 {% block title %} 
 
 {{block.super}} - Lab Request List
@@ -20,7 +22,14 @@
 	<th>Patient</th>
 	<th>Date</th>
 	<th>Lab</th>
-	<th> Test Details </th>
+	<th>Test Details </th>
+	<th>Results</th>
+
+	{% if request.user|has_group:"lab_technicians" %}
+
+	 <th> Action </th>
+
+	{% endif %}	
 	
 	{% for test in labrequest_list %}
 	<tr>
@@ -28,6 +37,23 @@
 		<td> {{test.date}}</td>
 		<td>{{test.lab}}</td>
 		<td><a href="{% url 'coreapp:lab-request-detail' request_id=test.id %}"> (View Details) </a></td>
+		<td>
+			{%if test.labresult%} 
+			Available <a href="{%url 'coreapp:lab-test-result' result_id=test.labresult.id%}">(view)</a>
+			{% else %}
+
+			Pending
+			{%endif%}
+		</td>
+
+			{% if request.user|has_group:"lab_technicians" and not test.labresult%}
+
+	 		<td> <a href="{%url 'coreapp:new-lab-result' 
+	 		request_id=test.id%}"> Add Result</a> </td>
+
+	 		{%else%}
+	 		<td> result submitted </td>
+			{% endif %}	
 	</tr>
 	
 	{%endfor%}

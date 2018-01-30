@@ -1,0 +1,52 @@
+{% extends 'base.html'%}
+
+{% block title %} 
+
+{{block.super}} - Lab Result
+
+{% endblock %}
+
+
+{% block main %} 
+
+<h1> Lab Result</h1>
+
+<ol>
+	<li>
+		<strong>PATIENT:</strong> {{lab_request.patient}}
+	</li>
+
+	<li>
+		<strong>Lab Request Details: </strong> <a href="{%url 'coreapp:lab-request-detail' request_id=lab_request.id%}"> view details</a>
+	</li>
+	
+	<!-- lab test/tests requested -->
+	<li>
+		<strong>TEST(s):</strong>
+		<ul>
+			<!-- loop through the list of labtests each time displaying a test -->
+			{%for test in labtests%}
+
+			<li>{{test}}</li> 
+			
+			{%endfor%}
+		</ul>
+	</li>
+
+	<li>
+		<strong>Lab Request Date:</strong> {{lab_request.date}}
+	</li>
+
+	<li>
+		<strong>Lab Results Submission Date: </strong> {{lab_result.date}}
+	</li>
+
+</ol>
+
+
+<h2>Diagnosis</h2>
+
+<p>{{lab_result.diagnosis}}</p>
+
+<p><a href="{%url 'coreapp:lab-result-update' pk=lab_result.id%}">Update Result </a></p>
+{% endblock %}

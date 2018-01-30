@@ -59,7 +59,7 @@ class Patient(models.Model):
 	insurance = models.ForeignKey(Insurance, models.SET_NULL, null=True, verbose_name='insurance company', blank=True)
 
 	def __str__(self):
-		return "{} {} {}".format(self.last_name, self.middle_name, self.first_name)
+		return "{} {} ".format(self.first_name, self.last_name)
 
 class LabRequest(models.Model):
 	""" Records of lab requests made """
@@ -76,10 +76,11 @@ class LabRequest(models.Model):
 class LabResult(models.Model):
 	""" Records Lab results - not viewed yet and updated by a doctor """
 
-	lab_request = models.ForeignKey(LabRequest, models.PROTECT, unique=True) # the test conducted
+	lab_request = models.OneToOneField(LabRequest, models.CASCADE) # the test conducted
 	diagnosis = models.TextField(null=False, blank=False)
 	date = models.DateField(auto_now_add=True) # date when the result was recorded
 	lab = models.ForeignKey(Laboratory, models.PROTECT)
+	test_result = models.TextField(null=False, blank=False)
 
 	def __str__(self):
 		return '[possible diagnosis]: ' + self.diagnosis

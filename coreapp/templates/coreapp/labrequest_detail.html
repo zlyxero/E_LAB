@@ -11,7 +11,7 @@
 {% block main %} 
 
 
-<h1> Lab Requst </h1>
+<h1> Lab Request </h1>
 
 <p><strong>PATIENT:</strong> {{request.patient}}</p>
 <p><strong>DATE:</strong> {{request.date}}</p>
@@ -26,8 +26,20 @@
 
 </p>
 
+{% if request.labresult%}
 
-<p style="padding-top: 60px"><a href="{%url 'coreapp:lab-request-list' %}">View all submitted lab test requests</a></p>
+<p><a href="{%url 'coreapp:lab-test-result' result_id=request.labresult.id%}">View Results for this test</a></p>
+
+{%else%}
+
+<p> No Results aviailable for this test </p>
+
+{% endif%}
+
+
+<p style="padding-top: 60px">
+	<a href="{%url 'coreapp:lab-request-list' %}">View all submitted lab test requests</a>
+</p>
 
 {% endblock %}
 
