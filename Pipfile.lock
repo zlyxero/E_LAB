@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "5d7c6d4c885639adbd608c4a790502eb0872cf9fcc049dbdb07b33a7956572e1"
+            "sha256": "324f538b25c1b872194d56b34cb8516c1f981c5de6315933d59216364fed1d5a"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -42,6 +42,12 @@
                 "sha256:d96b804be412a5125a594023ec524a2010a6ffa4d408e5482ab6ff3cb97ec12f"
             ],
             "version": "==2.0.1"
+        },
+        "django-bootstrap-form": {
+            "hashes": [
+                "sha256:2edeb528bcdd0de454575ca84be06e15130baf286b9d302eacbd893cbf691b94"
+            ],
+            "version": "==3.3"
         },
         "django-phonenumber-field": {
             "hashes": [

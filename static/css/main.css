@@ -1,4 +1,16 @@
 
+/* GENERAL */
+
+body {
+	font-size: 16px;
+}
+
+h1 {
+	font-size: 40px;
+	margin-bottom: 40px;
+}
+
+
 /* NAVBAR STYLES */
 
 .navbar-inverse {
@@ -26,4 +38,77 @@
     color: #fff;
     background-color: #000; 
 }    
+
+
+/* spacing styles */
+
+
+.space-around {
+
+	margin: 50px;
+}
+
+.space-around-md {
+
+	margin: 40px;
+}
+
+.space-around-sm {
+
+	margin-top: 15px;
+}
+
+/* overrides */
+
+.input_fields_wrap {
+
+	display: inline;
+}
+
+.add-group {
+
+	display: inline;
+}
+
+
+/* other styles */
+
+.testbox{
+	font-size: 15px;
+	background-color: #286090;
+	padding: 15px;
+	font-weight: bold;
+}
+
+.remove_field{
+
+	display: inline-block;
+	margin-left: 20px;
+	color: #FF564F;
+	border:1px solid #FF564F;
+	padding: 5px;
+}
+
+.remove_field:hover{
+	color: #FF564F;
+	font-size: 18px;
+}
+
+.testlabel{
+
+	color: #FFF;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.lab-result-details li {
+
+	padding: 10px;
+	font-size: 18px;
+}
+
+.lab-result-details li strong {
+
+	color: #286090;
+}
 

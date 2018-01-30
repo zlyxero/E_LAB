@@ -11,42 +11,51 @@
 
 <h1> Lab Result</h1>
 
-<ol>
-	<li>
-		<strong>PATIENT:</strong> {{lab_request.patient}}
-	</li>
+<div class="table-responsive">
 
-	<li>
-		<strong>Lab Request Details: </strong> <a href="{%url 'coreapp:lab-request-detail' request_id=lab_request.id%}"> view details</a>
-	</li>
-	
-	<!-- lab test/tests requested -->
-	<li>
-		<strong>TEST(s):</strong>
-		<ul>
-			<!-- loop through the list of labtests each time displaying a test -->
-			{%for test in labtests%}
+	<table class="table table-hover">
+		
+		<th>PATIENT</th>
 
-			<li>{{test}}</li> 
+		<th>Lab Request Details</th>
+		
+		<th>TEST(s)</th>
+
+
+		</li>
+
+		<th>Lab Request Date </th>
+
+		<th>Submission Date</th>
+
+		<tr>
+			<td>{{lab_request.patient}} </td>
 			
-			{%endfor%}
-		</ul>
-	</li>
+			<td>
+			 <a href="{%url 'coreapp:lab-request-detail' request_id=lab_request.id%}"> view details</a>
+			</td>
+			
+			<td>
+				<ul>
+					<!-- loop through the list of labtests each time displaying a test -->
+					{%for test in labtests%}
 
-	<li>
-		<strong>Lab Request Date:</strong> {{lab_request.date}}
-	</li>
+					<li>{{test}}</li> 
+					
+					{%endfor%}
+				</ul>
+			</td>
+			
+			<td>{{lab_request.date}}</td>
+			<td>{{lab_result.date}}</td>
+		</tr>
 
-	<li>
-		<strong>Lab Results Submission Date: </strong> {{lab_result.date}}
-	</li>
-
-</ol>
-
+	</table>
+</div>
 
 <h2>Diagnosis</h2>
 
 <p>{{lab_result.diagnosis}}</p>
 
-<p><a href="{%url 'coreapp:lab-result-update' pk=lab_result.id%}">Update Result </a></p>
+<p class="text-center"><a class="btn btn-primary space-around" href="{%url 'coreapp:lab-result-update' pk=lab_result.id%}">Update Result </a></p>
 {% endblock %}

@@ -8,14 +8,35 @@
 
 {% block main %} 
 
-<h1> Search Patient </h1>
 
-<form action="{% url 'coreapp:search-patient'%}" method="post">
-	{%csrf_token%}
-	{{form.as_p}}
+            
+<h1>SEARCH FOR PATIENT </h1>
 
-	<button type="submit">search</button>
+<div style="width:30%">
 
-</form>
+	<form action="{% url 'coreapp:search-patient'%}" method="post">
+		
+		{%csrf_token%}
+		
+		{% for field in form %}
+	    <div class="form-group has-errors text-danger small">
+	        {{field.errors}}
+	    </div>
+
+	    <div class="form-group">
+	    	
+	         
+	        {{field.label_tag}}
+	        {{field}}
+
+	    </div>
+
+	    {% endfor %}
+	    
+	    <button class="btn btn-primary" style="width:100%">Search</button>
+
+	</form>
+</div>
+
 
 {% endblock %}

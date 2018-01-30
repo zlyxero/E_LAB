@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load staticfiles %}
+
 <!-- title -->
 
 {% block title %} 
@@ -21,29 +22,66 @@
 
 {% block main %} 
 
+
 <h1> Lab Test Request </h1>
 
 <h2> Patient: {{patient.first_name}} {{patient.last_name}}</h2>
 
-<form action="{% url 'coreapp:lab-test-request' patient_id=patient.id %}" method="post">
-	
-	{%csrf_token%}
-	{{form.as_p}}
 
-	<!-- lab test input field -->
+<!-- Error displayed if no lab tests are selected -->
+<div class="form-group has-errors text-danger medium">
+	{{no_tests_error}}
+</div>	
 
-	<p><label for="id_test">Select Lab Test:</label> <input id="id_test" name="name" type="text" /></p>
+<div class="text-primary small">
+	<span> 
+		note: you can add one <strong>or several </strong> tests without reloading the page <br>
+		by searching and clicking the add test button 
 
-	<div class="input_fields_wrap">
-    	
-    	<button class="add_field_button">Add Test</button>
+	</span>
+</div>
 
-	</div>
+<div style="width:50%">
 
-	<button type="submit"> Send Request </button>
+	<form action="{% url 'coreapp:lab-test-request' patient_id=patient.id %}" method="post">
+		
+		{%csrf_token%}
 
-</form>
 
+		{% for field in form %}
+
+		    <div class="form-group has-errors text-danger small">
+		    	
+		        {{field.errors}}
+		    </div>
+
+		    <div class="form-group">
+		    	
+		         
+		        {{field.label_tag}}
+		        {{field}}
+
+		    </div>
+
+		    {% endfor %}
+		    
+
+		<!-- lab test input field -->
+
+		<p class="add-group"><label for="id_test">Search Lab Test:</label> <input id="id_test" name="name" type="text" /></p>
+
+		<div class="input_fields_wrap">
+	    	
+	    	<a class="add_field_button btn btn-primary">Add Test</a>
+
+	    	<h3> selected test(s): </h3>
+
+		</div>
+
+		    <button class="btn btn-primary space-around-md text-center" style="width:70%">Send Request</button>
+
+	</form>
+</div>
 
 <!-- scripts -->
 

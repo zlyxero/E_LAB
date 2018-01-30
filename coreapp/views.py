@@ -83,7 +83,10 @@ class LabTestRequest(View):
 		# get patient
 		patient = models.Patient.objects.get(id=patient_id)
 
-		if form.is_valid():
+		# get selected tests (strings)
+		test_list = request.POST.getlist('test')
+
+		if form.is_valid() and test_list:
 
 			# get form values
 			lab = form.cleaned_data.get('lab', '')
@@ -103,8 +106,6 @@ class LabTestRequest(View):
 			# # save lab request object before adding tests 
 			lab_request_object.save()
 
-			# get selected tests (strings)
-			test_list = request.POST.getlist('test')
 
 			# get tests object from DB and save it in a list called lab_test_objects
 			lab_test_objects = []
@@ -115,9 +116,21 @@ class LabTestRequest(View):
 			# associate given lab test objects with our lab_request_object
 			lab_request_object.lab_test.set(lab_test_objects) 
 
-			return redirect('coreapp:lab-request-submitted', patient_id=patient_id )	
+			return redirect('coreapp:lab-request-submitted', patient_id=patient_id )
+		
+		else:
+			# check if there were no tests selected and return a form with error message
+			# requiring atleast one lab test to be added.
+			if len(test_list) == 0:
+				
+				no_tests_error = 'NB: Please Add Atleast One Lab Test!'
 
-		return render(request, 'coreapp/lab_test_request_form.html', {'form': form, 'patient': patient})
+
+				return render(request, 'coreapp/lab_test_request_form.html', {'form': form, 'patient': patient, 'no_tests_error':no_tests_error})
+			
+
+
+			return render(request, 'coreapp/lab_test_request_form.html', {'form': form, 'patient': patient})	
 		
 
 def lab_request_success(request, patient_id):

@@ -11,54 +11,62 @@
 
 {% block main %} 
 
-<h1> List of submitted Lab requests </h1>
+<h1> LIST OF SUBMITTED LAB REQUESTS </h1>
 
 <!-- test if there are lab test request records found and display them -->
 
 {% if labrequest_list %}
 
-<table style="border:1px solid  black">
-	
-	<th>Patient</th>
-	<th>Date</th>
-	<th>Lab</th>
-	<th>Test Details </th>
-	<th>Results</th>
+<div class="table-responsive">
+	<table class="table table-hover">
+		
+		<th>PATIENT</th>
+		<th>DATE</th>
+		<th>LAB</th>
+		<th>TEST DETAILS </th>
+		<th>RESULTS</th>
 
-	{% if request.user|has_group:"lab_technicians" %}
+		{% if request.user|has_group:"lab_technicians" %}
 
-	 <th> Action </th>
+		 <th> ACTION </th>
 
-	{% endif %}	
-	
-	{% for test in labrequest_list %}
-	<tr>
-		<td>{{test.patient}} </td>
-		<td> {{test.date}}</td>
-		<td>{{test.lab}}</td>
-		<td><a href="{% url 'coreapp:lab-request-detail' request_id=test.id %}"> (View Details) </a></td>
-		<td>
-			{%if test.labresult%} 
-			Available <a href="{%url 'coreapp:lab-test-result' result_id=test.labresult.id%}">(view)</a>
-			{% else %}
+		{% endif %}	
+		
+		{% for test in labrequest_list %}
+		<tr>
+			<td>{{test.patient}} </td>
+			<td> {{test.date}}</td>
+			<td>{{test.lab}}</td>
+			<td><a href="{% url 'coreapp:lab-request-detail' request_id=test.id %}"> (View Details) </a></td>
+			<td>
+				{%if test.labresult%} 
+				Available <a href="{%url 'coreapp:lab-test-result' result_id=test.labresult.id%}">(view)</a>
+				{% else %}
 
-			Pending
-			{%endif%}
-		</td>
+				Pending
+				{%endif%}
+			</td>
 
-			{% if request.user|has_group:"lab_technicians" and not test.labresult%}
+				{% if request.user|has_group:"lab_technicians" %}
 
-	 		<td> <a href="{%url 'coreapp:new-lab-result' 
-	 		request_id=test.id%}"> Add Result</a> </td>
+					{%if not test.labresult%}
+			 		<td> <a href="{%url 'coreapp:new-lab-result' request_id=test.id%}"> Add Result</a> </td>
 
-	 		{%else%}
-	 		<td> result submitted </td>
-			{% endif %}	
-	</tr>
-	
-	{%endfor%}
-	
-</table>
+			 		{% else %}
+
+			 		<td> result submitted </td>
+
+			 		{% endif %}
+
+			 		
+				{% endif %}	
+		</tr>
+		
+		{%endfor%}
+		
+	</table>
+
+</div>
 
 {%else%}
 
@@ -66,7 +74,7 @@
 
 {%endif%}
 
-<p style="padding-top: 60px;"> Search for patient and <a href="{%url 'coreapp:search-patient' %}"> make new lab test request </a></p>
+<p style="padding-top: 60px;"> <a class="btn btn-primary" href="{%url 'coreapp:search-patient' %}"> make new lab test request </a></p>
 
 
 {% endblock %}

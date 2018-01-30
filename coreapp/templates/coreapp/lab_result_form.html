@@ -9,14 +9,34 @@
 
 {% block main %} 
 
-<form action="." method="post">
-	
-	{%csrf_token%}
+<h1> ADD LAB RESULT </h1>
 
-	{{form.as_p}}
+	<form action="." method="post">
+		
+		{%csrf_token%}
 
-	<button type="submit"> Send Result </button>
+		{% for field in form %}
+		    <div class="form-group has-errors text-danger small">
+		        {{field.errors}}
+		    </div>
 
-</form>
+		    <div class="form-group">
+		    	
+		         
+		        <p style="font-size: 18px; text-transform: uppercase;">
+
+		        {{field.label_tag}}
+
+		    	</p>
+		        
+		        {{field}}
+
+		    </div>
+
+		    {% endfor %}
+		    
+		  <button class="btn btn-primary" style="width:20%"> Submit </button>
+
+	</form>
 
 {% endblock %}

@@ -45,7 +45,12 @@ jQuery(function() {
                     // if the test is available, add it to form
                     if(data.exists == 1) {
 
-                        $(wrapper).append(`<div><input type="checkbox" name="test" value="${value}" checked> ${value} <a href="#" class="remove_field">Remove</a></div>`); //add input box
+                        $(wrapper).append(
+                        
+
+                        `<div class='testbox'><input type="checkbox" name="test" style="visibility:hidden;" value="${value}" checked><label class="testlabel" for="test">${value}</label>
+                        <a href="#" class="remove_field">Remove Test </a></div>`
+                        ); //add input box
 
                         $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
                         e.preventDefault(); $(this).parent('div').remove(); 
