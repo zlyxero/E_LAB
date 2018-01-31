@@ -65,6 +65,7 @@ class PatientRegistration(View):
 
 			return redirect('coreapp:lab-test-request', patient_id=patient.id)
 
+		return render(request, 'coreapp/patient_registration_form.html', {'form': form})	
 
 class LabTestRequest(View):
 
@@ -181,7 +182,7 @@ def testvalue(request):
 
 def LabRequestsList(request):
 	
-	labrequest_list = models.LabRequest.objects.all()
+	labrequest_list = models.LabRequest.objects.all().order_by('-date')
 	
 	context = {'labrequest_list': labrequest_list}
 

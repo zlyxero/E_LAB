@@ -53,7 +53,7 @@ class Patient(models.Model):
 	middle_name = models.CharField(max_length=35)
 	email = models.EmailField()
 	mobile = PhoneNumberField(unique=True)
-	date_of_birth = models.DateField()
+	date_of_birth = models.DateField(help_text='yy-mm-dd')
 	member_id = models.IntegerField(verbose_name='insurance member id', blank=True)
 
 	insurance = models.ForeignKey(Insurance, models.SET_NULL, null=True, verbose_name='insurance company', blank=True)

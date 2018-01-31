@@ -12,10 +12,28 @@
 
 <form action="{% url 'coreapp:patient-registration' %}" method="post">
 	
-	{%csrf_token%}
-	{{form.as_p}}
+		{%csrf_token%}
+		{% for field in form %}
+	    <div class="form-group has-errors text-danger small">
+	        {{field.errors}}
+	    </div>
 
-	<button type="submit"> Register </button>
+	    <div class="form-group">
+	    	
+	         
+	        {{field.label_tag}}
+	        {{field}}
+	        {% if field.help_text%}
+	        <span class="helptext text-primary medium"> 
+	        	{{field.help_text}}
+	        </span>
+	        {%endif%}	
+
+	    </div>
+
+	    {% endfor %}
+	    
+	    <button class="btn btn-primary" style="width:40%">register</button>
 
 </form>
 

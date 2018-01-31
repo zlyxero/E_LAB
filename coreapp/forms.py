@@ -10,7 +10,7 @@ class PatientSearchForm(forms.Form):
 
 	first_name = forms.CharField()
 	mobile = PhoneNumberField()
-	member_id = forms.IntegerField(help_text='insurance member id', required=False, min_value=0)
+	member_id = forms.IntegerField(help_text='insurance member id (optional)', required=False, min_value=0)
 	
 
 class PatientRegistrationForm(ModelForm):
@@ -18,6 +18,7 @@ class PatientRegistrationForm(ModelForm):
 	class Meta:
 		model = Patient
 		fields = '__all__'
+
 
 class LabTestRequestForm(forms.Form):
 
