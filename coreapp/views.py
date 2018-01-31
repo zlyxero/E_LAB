@@ -229,8 +229,17 @@ def user_login(request):
 			# Is the account active? It could have been disabled.
 			if user.is_active:
 				# If the account is valid and active, we can log the user in.
-				# We'll send the user back to the homepage.
+				
+				# We'll send the user to the lab requests page if the 
+				# user is a lab technician else we send them to patient search page
+
+
 				login(request, user)
+				
+				if user.groups.filter(name='lab_technicians').exists():
+
+					return redirect('coreapp:lab-request-list')
+					
 				return redirect('coreapp:search-patient')
 			else:
 				# An inactive account was used -- no logging in!
@@ -260,7 +269,7 @@ class LabResult(View):
 
 			diagnosis = form.cleaned_data['diagnosis']
 			lab = form.cleaned_data['lab']
-			test_result = form.cleaned_data['lab']
+			test_result = form.cleaned_data['test_result']
 
 			lab_request = get_object_or_404(models.LabRequest, id=request_id)
 			

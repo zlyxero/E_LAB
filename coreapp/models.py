@@ -29,10 +29,11 @@ class LabTest(models.Model):
 class Laboratory(models.Model):
 	""" Records laboratory names where lab test requests can be sent to """		
 
-	name = models.CharField(max_length=100)
+	name = models.CharField(max_length=100, unique=True)
 
 	class Meta:
 		verbose_name_plural = 'laboratories'
+		ordering = ['name']
 
 	def __str__(self):
 		return self.name	
@@ -54,7 +55,7 @@ class Patient(models.Model):
 	email = models.EmailField()
 	mobile = PhoneNumberField(unique=True)
 	date_of_birth = models.DateField(help_text='yy-mm-dd')
-	member_id = models.IntegerField(verbose_name='insurance member id', blank=True)
+	member_id = models.IntegerField(verbose_name='insurance member id', blank=True, null=True)
 
 	insurance = models.ForeignKey(Insurance, models.SET_NULL, null=True, verbose_name='insurance company', blank=True)
 

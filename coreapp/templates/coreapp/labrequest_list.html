@@ -11,8 +11,16 @@
 
 {% block main %} 
 
-<h1> LIST OF SUBMITTED LAB REQUESTS </h1>
+<div class="row">
+	<div class="col-sm-10">
+		<h1> LIST OF SUBMITTED LAB REQUESTS </h1>
+	</div>
 
+	<div class="col-sm-2">
+		<p style="padding-top: 20px;"> <a class="btn btn-danger" href="{%url 'coreapp:search-patient' %}"> make new lab test request </a></p>		
+	</div>
+
+</div>
 <!-- test if there are lab test request records found and display them -->
 
 {% if labrequest_list %}
@@ -73,8 +81,6 @@
 <h2 style="text-align: center; padding-top: 100px;"> No Records of Lab Requests </h2>
 
 {%endif%}
-
-<p style="padding-top: 60px;"> <a class="btn btn-primary" href="{%url 'coreapp:search-patient' %}"> make new lab test request </a></p>
 
 
 {% endblock %}
