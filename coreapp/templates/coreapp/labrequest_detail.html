@@ -11,23 +11,42 @@
 {% block main %} 
 
 
-<h1> Lab Requst </h1>
+<h1> LAB REQUEST </h1>
 
-<p><strong>PATIENT:</strong> {{request.patient}}</p>
-<p><strong>DATE:</strong> {{request.date}}</p>
-<p>
-	<strong> TEST(s): </strong>
+<div class="table-responsive">
+	<table class="table table-hover">
+		<th>PATIENT</th>
+		<th>DATE</th>
+		<th>TEST(S)</th>
 
-	 <ol>
-		{% for test in labtests %}
-			<li> {{test.name}} </li>
-		{% endfor %}	
-	 </ol> 
+		<tr>
+			<td>{{request.patient}}</td>
+			<td>{{request.date}}</td>
+			<td>
+				<ol>
+					{% for test in labtests %}
+						
+						<li> {{test.name}} </li>
+					
+					{% endfor %}	
+		 		</ol> 
+			</td>
+		</tr>
 
-</p>
+	</table>
 
+</div>
 
-<p style="padding-top: 60px"><a href="{%url 'coreapp:lab-request-list' %}">View all submitted lab test requests</a></p>
+{% if request.labresult%}
+
+<p><a class="btn btn-primary space-around-sm"  href="{%url 'coreapp:lab-test-result' result_id=request.labresult.id%}">View Results for this test</a></p>
+
+{%else%}
+
+<p> No Results aviailable for this test </p>
+
+{% endif%}
+
 
 {% endblock %}
 

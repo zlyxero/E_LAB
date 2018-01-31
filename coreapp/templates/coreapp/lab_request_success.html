@@ -11,8 +11,8 @@
 
 <h1> Lab Request Submitted! </h1>
 
-<p><a href="{%url 'coreapp:lab-test-request' patient_id=patient.id%}">make new lab request </a> for {{patient.first_name }} {{patient.last_name}} </p>
+<p><a class="btn btn-primary space-around-sm" role="button" href="{%url 'coreapp:lab-test-request' patient_id=patient.id%}">make new lab request for {{patient.first_name }} {{patient.last_name}} </a>  </p>
 
-<p><a href="{%url 'coreapp:lab-request-list'%}">View submitted lab requests</a></p>
+<p><a class="btn btn-primary space-around-sm" role="button" href="{%url 'coreapp:lab-request-list'%}">View submitted lab requests</a></p>
 
 {% endblock %}

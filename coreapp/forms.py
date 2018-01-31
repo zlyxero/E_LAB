@@ -3,20 +3,22 @@ from .models import Patient, Specimen, Laboratory, LabResult
 from django import forms
 import datetime
 from django.contrib.auth.models import User
+from phonenumber_field.formfields import PhoneNumberField
 
 
-class PatientSearchForm(ModelForm):
+class PatientSearchForm(forms.Form):
 
-	class Meta:
-		model = Patient
-		fields = ['first_name', 'mobile', 'member_id']
-
+	first_name = forms.CharField()
+	mobile = PhoneNumberField()
+	member_id = forms.IntegerField(help_text='insurance member id (optional)', required=False, min_value=0)
+	
 
 class PatientRegistrationForm(ModelForm):
 
 	class Meta:
 		model = Patient
 		fields = '__all__'
+
 
 class LabTestRequestForm(forms.Form):
 
@@ -42,6 +44,7 @@ class LabResultForm(ModelForm):
 
 	class Meta:
 		model = LabResult
-		fields = '__all__'
+		fields = ['test_result', 'diagnosis', 'lab' ]
 
-		
+
+

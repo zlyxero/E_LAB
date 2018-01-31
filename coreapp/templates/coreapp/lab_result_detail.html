@@ -1,0 +1,61 @@
+{% extends 'base.html'%}
+
+{% block title %} 
+
+{{block.super}} - Lab Result
+
+{% endblock %}
+
+
+{% block main %} 
+
+<h1> Lab Result</h1>
+
+<div class="table-responsive">
+
+	<table class="table table-hover">
+		
+		<th>PATIENT</th>
+
+		<th>Lab Request Details</th>
+		
+		<th>TEST(s)</th>
+
+
+		</li>
+
+		<th>Lab Request Date </th>
+
+		<th>Submission Date</th>
+
+		<tr>
+			<td>{{lab_request.patient}} </td>
+			
+			<td>
+			 <a href="{%url 'coreapp:lab-request-detail' request_id=lab_request.id%}"> view details</a>
+			</td>
+			
+			<td>
+				<ul>
+					<!-- loop through the list of labtests each time displaying a test -->
+					{%for test in labtests%}
+
+					<li>{{test}}</li> 
+					
+					{%endfor%}
+				</ul>
+			</td>
+			
+			<td>{{lab_request.date}}</td>
+			<td>{{lab_result.date}}</td>
+		</tr>
+
+	</table>
+</div>
+
+<h2>Diagnosis</h2>
+
+<p>{{lab_result.diagnosis}}</p>
+
+<p class="text-center"><a class="btn btn-primary space-around" href="{%url 'coreapp:lab-result-update' pk=lab_result.id%}">Update Result </a></p>
+{% endblock %}

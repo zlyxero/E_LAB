@@ -14,6 +14,9 @@ name = "pypi"
 django = "==2.0.1"
 django-phonenumber-field = "*"
 "psycopg2" = "*"
+django-bootstrap-form = "*"
+gunicorn = "*"
+whitenoise = "*"
 
 
 [requires]

@@ -22,7 +22,8 @@ td, th {
 
 <!-- test if there are patient records found and display them -->
 
-<table>
+<div class="table-responsive">
+<table class="table table-hover">
 	<th>First Name</th>
 	<th>Last Name</th>
 	<th>Middle Name</th>
@@ -44,20 +45,25 @@ td, th {
 		<td>{{patient.insurance}}</td>
 		<td>{{patient.member_id}}</td>
 	</tr>
-
-{% endfor %}
 		
 </table>
 
-<p><a href="{% url 'coreapp:lab-test-request' patient_id=patient.id %}">Make lab test request for {{patient.first_name}} {{patient.last_name}} </a> </p>
+</div>
 
+<p class="text-center space-around">
+	<a class="btn btn-primary" role="button" href="{% url 'coreapp:lab-test-request' patient_id=patient.id %}">
+	 Make lab test request for {{patient.first_name}} {{patient.last_name}}
+	</a> 
+</p>
+
+{%endfor%}
 <!-- no patient records found from the search -->
 
 {%else%}
 
-<h2> No patient records found</h2>
-<p><a href="{%url 'coreapp:patient-registration'%}"> Register New Patient </a></p>
-<p><a href="{%url 'coreapp:search-patient'%}">Try another search</a></p>
+<h2> No patient records found!!</h2>
+<p><a class="btn btn-primary space-around-sm" href="{%url 'coreapp:patient-registration'%}"> Register New Patient </a></p>
+<p><a class="btn btn-primary space-around-sm" href="{%url 'coreapp:search-patient'%}">Try another search</a></p>
 
 {% endif %}	
 
