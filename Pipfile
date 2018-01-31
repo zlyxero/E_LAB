@@ -17,6 +17,7 @@ django-phonenumber-field = "*"
 django-bootstrap-form = "*"
 gunicorn = "*"
 whitenoise = "*"
+dj-database-url = "*"
 
 
 [requires]
