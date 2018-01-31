@@ -150,3 +150,8 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 # phone number field settings
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'KE'
+
+
+# login
+
+LOGIN_URL='/'

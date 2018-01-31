@@ -6,10 +6,12 @@ from . import models
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 from django.urls import reverse_lazy 
-
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 
+@method_decorator(login_required, name='dispatch')
 class SearchPatient(View):
 
 	def get(self, request):
@@ -44,6 +46,7 @@ class SearchPatient(View):
 
 
 
+@method_decorator(login_required, name='dispatch')
 class PatientRegistration(View):
 
 	def get(self, request):
@@ -67,6 +70,9 @@ class PatientRegistration(View):
 
 		return render(request, 'coreapp/patient_registration_form.html', {'form': form})	
 
+
+
+@method_decorator(login_required, name='dispatch')
 class LabTestRequest(View):
 
 	def get(self, request, patient_id):
@@ -179,7 +185,7 @@ def testvalue(request):
         return JsonResponse(data)		
 
 
-
+@login_required
 def LabRequestsList(request):
 	
 	labrequest_list = models.LabRequest.objects.all().order_by('-date')
@@ -188,6 +194,8 @@ def LabRequestsList(request):
 
 	return render(request, 'coreapp/labrequest_list.html', context)
 
+
+@login_required
 def LabRequestDetail(request, request_id):
 
 	labrequest = models.LabRequest.objects.get(id=request_id)
@@ -236,6 +244,7 @@ def user_login(request):
 	return render(request, 'coreapp/login.html', {'errors':errors})			
 
 
+@method_decorator(login_required, name='dispatch')
 class LabResult(View):
 	""" form used to add a result for a requested lab test """
 	def get(self, request, request_id):
@@ -273,6 +282,7 @@ class LabResult(View):
 			return render(request, 'coreapp/lab_result_form.html', {'form':form})
 
 
+@login_required
 def LabResultDetail(request, result_id):
 	
 	""" The details of a lab result. From the url we get the id of of a lab result """
@@ -287,13 +297,13 @@ def LabResultDetail(request, result_id):
 
 	return render(request, 'coreapp/lab_result_detail.html', context)
 
-
+@method_decorator(login_required, name='dispatch')
 class LabResultUpdate(UpdateView):
 
 	""" Update lab results """
 
 	model = models.LabResult
-	fields = ['diagnosis']
+	fields = ['test_result', 'diagnosis']
 	template_name = 'coreapp/labresult_update_form.html'
 	success_url = reverse_lazy('coreapp:labresult-updated')
 

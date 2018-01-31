@@ -85,22 +85,6 @@ class LabResult(models.Model):
 	def __str__(self):
 		return '[possible diagnosis]: ' + self.diagnosis
 
-class LabResultUpdated(models.Model):
-	""" Records viewed and updated lab results, by the doctor """
-
-	lab_request = models.ForeignKey(LabRequest, models.PROTECT)
-	diagnosis = models.TextField(null=False, blank=False)
-	visit_type = models.CharField(max_length=15)
-	date = models.DateField(auto_now_add=True)
-	lab = models.CharField(max_length=100)
-
-	class Meta:
-		verbose_name_plural = 'lab results updated'
-
-
-	def __str__(self):
-		return 'diagnosis: ' + self.diagnosis	
-
 
 class UserProfile(models.Model):
 	# This line is required. Links UserProfile to a User model instance.

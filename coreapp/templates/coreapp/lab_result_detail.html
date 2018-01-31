@@ -53,9 +53,18 @@
 	</table>
 </div>
 
-<h2>Diagnosis</h2>
+
+<h2 class="space-vertical">Lab Test Findings</h2>
+
+<p>{{lab_result.test_result}}</p>
+
+
+<h2 class="space-vertical">Possible Diagnosis</h2>
+
 
 <p>{{lab_result.diagnosis}}</p>
+
+
 
 <p class="text-center"><a class="btn btn-primary space-around" href="{%url 'coreapp:lab-result-update' pk=lab_result.id%}">Update Result </a></p>
 {% endblock %}
